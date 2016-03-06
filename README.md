@@ -1,3 +1,3 @@
 # Projecten2ServerSide
-serverside voor projecten2
+JavaFX Projecten2 clientside: 
 https://github.com/ewoutG/projecten2
