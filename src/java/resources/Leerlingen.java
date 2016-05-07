@@ -10,6 +10,7 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
@@ -47,11 +48,54 @@ public class Leerlingen {
         return l;
     }
     
-//    @Path("naam/{naam}")
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Leerling getLeerlingByNaam(@PathParam("naam") String naam){
-//        TypedQuery<Leerling> queryFindAll = em.createNamedQuery("Leerling.findByName", Leerling.class);
-//        return queryFindAll.getSingleResult();
-//    }
+    @Path("naam/{naam}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Leerling getLeerlingByNaam(@PathParam("naam") String naam){
+        TypedQuery<Leerling> queryFindAll = em.createNamedQuery("Leerling.findAll", Leerling.class);
+        Leerling res = null;
+        for(Leerling l : queryFindAll.getResultList()){
+            if(l.getNaam().endsWith(naam))
+                res = l;
+        }
+        if (res == null) {
+            throw new NotFoundException("Gebruiker niet gevonden");
+        }
+        return res;
+
+    }
+    
+    @Path("voornaam/{naam}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Leerling getLeerlingByVoorNaam(@PathParam("naam") String naam){
+        TypedQuery<Leerling> queryFindAll = em.createNamedQuery("Leerling.findAll", Leerling.class);
+        Leerling res = null;
+        for(Leerling l : queryFindAll.getResultList()){
+            if(l.getNaam().startsWith(naam))
+                res = l;
+        }
+        if (res == null) {
+            throw new NotFoundException("Gebruiker niet gevonden");
+        }
+        return res;
+
+    }
+    
+    @Path("volledigenaam/{naam}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Leerling getLeerlingByVolledigeNaam(@PathParam("naam") String naam){
+        TypedQuery<Leerling> queryFindAll = em.createNamedQuery("Leerling.findAll", Leerling.class);
+        Leerling res = null;
+        for(Leerling l : queryFindAll.getResultList()){
+            if(l.getNaam().equals(naam))
+                res = l;
+        }
+        if (res == null) {
+            throw new NotFoundException("Gebruiker niet gevonden");
+        }
+        return res;
+
+    }
 }

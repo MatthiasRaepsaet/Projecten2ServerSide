@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @Table(name = "TBL_LEERLING")
 @NamedQueries({
     @NamedQuery(name = "Leerling.findAll", query = "SELECT l FROM Leerling l"),
-//    @NamedQuery(name = "Leerling.findByName", query = "SELECT l FROM Leerling l WHERE l.naam = :naam"),
+    @NamedQuery(name = "Leerling.findByName", query = "SELECT l FROM Leerling l WHERE l.naam = :naam"),
     @NamedQuery(name = "Leerling.findByNummer", query = "SELECT l FROM Leerling l WHERE l.inschrijvingsNummer = :nummer")
         
 })
@@ -43,7 +43,7 @@ public class Leerling {
     private String naam;
     private File fotoPath;
     private String email;
-
+    
     public String getInschrijvingsNummer() {
         return inschrijvingsNummer;
     }
