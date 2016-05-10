@@ -8,6 +8,7 @@ package domein;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -28,6 +29,7 @@ import javax.persistence.Table;
 public class Evaluatie {
     
     @Id
+    @GeneratedValue
     private String evaluatieNummer;
     
     private int rijtechniekenScore;
@@ -57,6 +59,24 @@ public class Evaluatie {
     private Leerling leerling;
 
     public Evaluatie() {
+        this.rijtechniekenScore =0;
+        this.verkeerstechniekenScore = 0;
+        this.algemeneScore = 0;
+        this.algemeneOpmerkingen = "";
+        this.rotonde = Kleuren.WIT;
+        this.steenweg = Kleuren.WIT;
+        this.bebouwdeKom = Kleuren.WIT;
+        this.autostrade =Kleuren.WIT;
+        this.links1 = Kleuren.WIT;
+        this.links2 = Kleuren.WIT;
+        this.links3 = Kleuren.WIT;
+        this.rechts1 = Kleuren.WIT;
+        this.rechts2 = Kleuren.WIT;
+        this.rechts3 = Kleuren.WIT;
+        this.evaLijst = new ArrayList<>();
+        this.evaLijst.add(new EvaluatieMoment("eva1"));
+        this.evaLijst.add(new EvaluatieMoment("eva2"));
+        this.evaLijst.add(new EvaluatieMoment("eva3"));
     }
     
 //    public Evaluatie(String evaluatieNummer, int rijtechniekenScore, int verkeerstechniekenScore, int algemeneScore, String algemeneOpmerkingen, Kleuren rotonde, Kleuren steenweg, Kleuren bebouwdeKom, Kleuren autostrade) {

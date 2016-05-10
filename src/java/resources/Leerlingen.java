@@ -5,7 +5,12 @@
  */
 package resources;
 
+import domein.Evaluatie;
+import domein.EvaluatieMoment;
+import domein.Kleuren;
 import domein.Leerling;
+import domein.RijOnderdeel;
+import domein.VerkeersOnderdeel;
 import java.net.URI;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -13,6 +18,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -28,8 +34,10 @@ import javax.ws.rs.core.Response;
  *
  * @author Matthias
  */
+         
 @RequestScoped
 @Path("leerlingen")
+@Transactional(dontRollbackOn = {BadRequestException.class, NotFoundException.class})
 public class Leerlingen {
     
     @PersistenceContext
@@ -72,7 +80,7 @@ public class Leerlingen {
     
     @Path("voornaam/{naam}")
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     public Leerling getLeerlingByVoorNaam(@PathParam("naam") String naam){
         TypedQuery<Leerling> queryFindAll = em.createNamedQuery("Leerling.findAll", Leerling.class);
         Leerling res = null;
@@ -108,26 +116,27 @@ public class Leerlingen {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addLeerling(Leerling leerling)
     {
-        if (leerling.getInschrijvingsNummer()== null || leerling.getInschrijvingsNummer().trim().length() < 8) {
-            throw new BadRequestException("Username ongeldig");
-        }
-        
-        leerling.setInschrijvingsNummer(leerling.getInschrijvingsNummer().trim());
-        
-        if (em.find(Leerling.class, leerling.getInschrijvingsNummer()) != null) {
-            throw new BadRequestException("Username al in gebruik");
-        }
         
         if (leerling.getNaam() == null) {
             throw new BadRequestException("Paswoord ongeldig");
         }
-        
+        leerling.setNaam(leerling.getNaam().trim());
         if (leerling.getEmail()== null) {
             throw new BadRequestException("Paswoord ongeldig");
         }
-        
+        Evaluatie e = new Evaluatie();
+        for(EvaluatieMoment evam : e.getEvaLijst()){
+            for(RijOnderdeel ro : evam.getRijtechniekOnderdelen()){
+                em.persist(ro);
+            }
+            for(VerkeersOnderdeel vo : evam.getVerkeerstechniekOnderdelen()){
+                em.persist(vo);
+            }
+            em.persist(evam);
+        }
         leerling.setEmail(leerling.getEmail().trim());
-        
+        leerling.setEvaluatie(e);
+        em.persist(e);
         em.persist(leerling);
         
         return Response.created(URI.create("/" + leerling.getInschrijvingsNummer())).build();

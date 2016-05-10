@@ -49,7 +49,7 @@ public class LeerlingReader implements MessageBodyReader<Leerling>{
             JsonObject jsonUser = in.readObject();
             Leerling user = new Leerling();
             
-            user.setInschrijvingsNummer(jsonUser.getString("inschrijvingsNummer", null));
+            
             user.setNaam(jsonUser.getString("naam", null));
             user.setEmail(jsonUser.getString("email", null));
 //            user.setFotoPath(jsonUser.getString("fotoPath", null));

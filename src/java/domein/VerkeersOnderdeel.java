@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -22,6 +23,7 @@ import javax.persistence.Table;
 public class VerkeersOnderdeel extends Onderdeel{
     
     @Id
+    @GeneratedValue
     private String onderdeelId;
     private String naam;
     
@@ -33,6 +35,19 @@ public class VerkeersOnderdeel extends Onderdeel{
     private EvaluatieMoment evaluatieMoment;
     
     public VerkeersOnderdeel() {
+    }
+
+    public VerkeersOnderdeel(String naam) {
+        this.naam = naam;
+        this.kleur = Kleuren.WIT;
+    }
+
+    public EvaluatieMoment getEvaluatieMoment() {
+        return evaluatieMoment;
+    }
+
+    public void setEvaluatieMoment(EvaluatieMoment evaluatieMoment) {
+        this.evaluatieMoment = evaluatieMoment;
     }
 
     
