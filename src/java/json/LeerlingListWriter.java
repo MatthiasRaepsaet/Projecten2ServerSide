@@ -63,7 +63,7 @@ public class LeerlingListWriter implements MessageBodyWriter<List<Leerling>>{
             jsonUser.add("inschrijvingsNummer", leerling.getInschrijvingsNummer());
             jsonUser.add("naam", leerling.getNaam());
             jsonUser.add("email", leerling.getEmail());
-            
+            jsonUser.add("evaluatieNummer", leerling.getEvaluatie().getEvaluatieNummer());
             jsonUsers.add(jsonUser);
         }
         

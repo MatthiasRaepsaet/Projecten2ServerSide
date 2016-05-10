@@ -9,8 +9,10 @@ import java.io.File;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -44,6 +46,9 @@ public class Leerling {
     private File fotoPath;
     private String email;
     
+    @OneToOne
+    private Evaluatie evaluatie;
+    
     public String getInschrijvingsNummer() {
         return inschrijvingsNummer;
     }
@@ -76,6 +81,16 @@ public class Leerling {
         this.email = email;
     }
 
+    public Evaluatie getEvaluatie() {
+        return evaluatie;
+    }
+
+    public void setEvaluatie(Evaluatie evaluatie) {
+        this.evaluatie = evaluatie;
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 7;
