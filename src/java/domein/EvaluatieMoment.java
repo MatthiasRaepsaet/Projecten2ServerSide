@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -23,6 +24,7 @@ import javax.persistence.Table;
 public class EvaluatieMoment implements Serializable {
     
     @Id
+    @GeneratedValue
     private String id;
     
     private String naam;
@@ -37,6 +39,7 @@ public class EvaluatieMoment implements Serializable {
     private Evaluatie evaluatie;
     
     public EvaluatieMoment() {
+        
     }
 
     

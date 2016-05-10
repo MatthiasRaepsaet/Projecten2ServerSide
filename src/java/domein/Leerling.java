@@ -8,6 +8,7 @@ package domein;
 import java.io.File;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
@@ -41,6 +42,7 @@ public class Leerling {
     
     
     @Id
+    @GeneratedValue
     private String inschrijvingsNummer;
     private String naam;
     private File fotoPath;
