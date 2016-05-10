@@ -6,18 +6,23 @@
 package resources;
 
 import domein.Leerling;
+import java.net.URI;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -97,5 +102,34 @@ public class Leerlingen {
         }
         return res;
 
+    }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addLeerling(Leerling leerling)
+    {
+        if (leerling.getInschrijvingsNummer()== null || leerling.getInschrijvingsNummer().trim().length() < 8) {
+            throw new BadRequestException("Username ongeldig");
+        }
+        
+        leerling.setInschrijvingsNummer(leerling.getInschrijvingsNummer().trim());
+        
+        if (em.find(Leerling.class, leerling.getInschrijvingsNummer()) != null) {
+            throw new BadRequestException("Username al in gebruik");
+        }
+        
+        if (leerling.getNaam() == null) {
+            throw new BadRequestException("Paswoord ongeldig");
+        }
+        
+        if (leerling.getEmail()== null) {
+            throw new BadRequestException("Paswoord ongeldig");
+        }
+        
+        leerling.setEmail(leerling.getEmail().trim());
+        
+        em.persist(leerling);
+        
+        return Response.created(URI.create("/" + leerling.getInschrijvingsNummer())).build();
     }
 }

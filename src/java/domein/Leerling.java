@@ -81,6 +81,16 @@ public class Leerling {
         this.email = email;
     }
 
+    public Evaluatie getEvaluatie() {
+        return evaluatie;
+    }
+
+    public void setEvaluatie(Evaluatie evaluatie) {
+        this.evaluatie = evaluatie;
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 7;
